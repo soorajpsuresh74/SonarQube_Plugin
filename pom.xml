@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.reflectionsinfos</groupId>
+  <artifactId>Hardcoded.plugin</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>sonar-plugin</packaging>
+
+  <name>Hardcoded.plugin</name>
+  <description>
+    Plugin used for detecting the HARDCODED SECRETS on codebase, leaving them untreated may cause potential
+  issues in future
+  </description>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+    <sonar.api.version>10.7.0.2191</sonar.api.version>
+    <sonar.python.version>3.24.1.11916</sonar.python.version>
+    <sonar.testing.harness.version>9.5.0.56709</sonar.testing.harness.version>
+    <sonar.junit.version>4.13.2</sonar.junit.version>
+    <sonar.plugin.packaging.version>1.23.0.740</sonar.plugin.packaging.version>
+    <sonar.python.checks.testkit>4.19.0.15616</sonar.python.checks.testkit>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>Central</id>
+      <name>Maven central repo</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>sonarsource</id>
+      <url>https://repox.jfrog.io/artifactory/sonarsource/</url>
+    </repository>
+    <repository>
+      <id>sonarsource1</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- JUnit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${sonar.junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- SonarQube API -->
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Python Plugin API -->
+    <dependency>
+      <groupId>org.sonarsource.python</groupId>
+      <artifactId>sonar-python-plugin</artifactId>
+      <version>${sonar.python.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Testing Harness -->
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-testing-harness</artifactId>
+      <version>${sonar.testing.harness.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Python Checks TestKit -->
+    <dependency>
+      <groupId>org.sonarsource.python</groupId>
+      <artifactId>python-checks-testkit</artifactId>
+      <version>${sonar.python.checks.testkit}</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <!-- SLF4J API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.30</version>
+    </dependency>
+
+    <!-- Logback Classic -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!-- SonarQube Plugin Packaging -->
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>${sonar.plugin.packaging.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <pluginKey>hardcodedsecrets</pluginKey>
+          <pluginClass>com.reflectionsinfos.Hardcodedplugin</pluginClass>
+          <pluginApiMinVersion>9.5</pluginApiMinVersion>
+          <requirePlugins>python:${sonar.python.version}</requirePlugins>
+          <skipDependenciesPackaging>true</skipDependenciesPackaging>
+        </configuration>
+      </plugin>
+      <!-- Maven Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

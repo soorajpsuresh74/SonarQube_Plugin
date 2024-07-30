@@ -1,0 +1,23 @@
+
+<h1>No Hardcoded API Keys</h1>
+<p>This rule discourages the use of hardcoded API keys within the code to prevent security risks.</p>
+<h2>Non-Compliant Example</h2>
+<pre class="noncompliant">
+        <code>
+# Non-compliant code example
+API_KEY = "12345-abcde-67890-fghij"
+response = requests.get(f"https://api.example.com/data?apikey={API_KEY}")
+        </code>
+    </pre>
+<h2>Compliant Example</h2>
+<pre class="compliant">
+        <code>
+# Compliant code example
+import os
+API_KEY = os.getenv("API_KEY")
+response = requests.get(f"https://api.example.com/data?apikey={API_KEY}")
+</code>
+</pre>
+
+<h2>Rationale</h2>
+<p>Hardcoding API keys within the code can lead to security vulnerabilities if the code is exposed. Storing API keys in environment variables or configuration files ensures that sensitive information is kept secure and can be easily changed without modifying the code.</p>

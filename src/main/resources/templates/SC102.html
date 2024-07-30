@@ -1,0 +1,38 @@
+<h1>Avoid Hardcoding AWS Access Keys</h1>
+<p>This rule checks for hardcoded AWS access keys (starting with <code>AKIA</code> or <code>ASIA</code>) in Python code.</p>
+
+<h2>Non-Compliant Example</h2>
+<pre class="noncompliant">
+        <code>
+# Non-compliant code example
+aws_key_akia = "AKIAEXAMPLE1234567890"
+aws_key_asia = "ASIAEXAMPLE1234567890"
+
+def example_function():
+    # Using the AWS key inside a function
+    aws_key_in_function = "AKIAANOTHEREXAMPLE123456"
+    return aws_key_in_function
+        </code>
+    </pre>
+
+<h2>Compliant Example</h2>
+<pre class="compliant">
+        <code>
+# Compliant code example
+import os
+
+aws_key_akia = os.getenv('AWS_ACCESS_KEY_ID')
+aws_key_asia = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+def example_function():
+    # Using the AWS key inside a function
+    aws_key_in_function = os.getenv('ANOTHER_AWS_ACCESS_KEY_ID')
+    return aws_key_in_function
+        </code>
+    </pre>
+
+<h2>Rationale</h2>
+<p>Hardcoding AWS access keys in the source code is a security risk. If the source code is leaked or shared, the hardcoded keys can be used to gain unauthorized access to AWS resources. Using environment variables to store and retrieve sensitive information helps in mitigating this risk.</p>
+
+<h2>How to Fix Violations</h2>
+<p>To fix the violation, move the sensitive keys to environment variables and access them using <code>os.getenv</code> or a similar method appropriate for your programming environment. This approach ensures that sensitive information is not exposed in the source code.</p>

@@ -1,0 +1,18 @@
+<configuration>
+
+    <!-- Console appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger configuration -->
+    <root level="debug">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Optional: specific logger configuration -->
+    <logger name="com.reflectionsinfos.repository.checks.AWSkeyCheck" level="debug" />
+
+</configuration>
