@@ -1,0 +1,34 @@
+<h1>Avoid Hardcoding Social Security Numbers (SSNs)</h1>
+<p>This rule checks for hardcoded Social Security Numbers (SSNs) in Python code.</p>
+<h2>Non-Compliant Example</h2>
+<pre class="noncompliant">
+        <code>
+# Non-compliant code example
+ssn_person1 = "123-45-6789"
+ssn_person2 = "987-65-4321"
+def example_function():
+# Using the SSN inside a function
+ssn_in_function = "111-22-3333"
+return ssn_in_function
+</code>
+</pre>
+
+<h2>Compliant Example</h2>
+<pre class="compliant">
+        <code>
+# Compliant code example
+import os
+ssn_person1 = os.getenv('SSN_PERSON1')
+ssn_person2 = os.getenv('SSN_PERSON2')
+
+def example_function():
+# Using the SSN inside a function
+ssn_in_function = os.getenv('SSN_IN_FUNCTION')
+return ssn_in_function
+</code>
+</pre>
+
+<h2>Rationale</h2>
+<p>Hardcoding Social Security Numbers (SSNs) in source code poses a significant security risk. If the source code is leaked or shared, the hardcoded SSNs can be misused for identity theft or other malicious activities. Using environment variables to store and retrieve sensitive information helps mitigate this risk.</p>
+<h2>How to Fix Violations</h2>
+<p>To fix the violation, move the sensitive SSNs to environment variables and access them using <code>os.getenv</code> or a similar method appropriate for your programming environment. This approach ensures that sensitive information is not exposed in the source code.</p>

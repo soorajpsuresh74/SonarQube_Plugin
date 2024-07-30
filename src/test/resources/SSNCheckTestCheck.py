@@ -1,0 +1,1 @@
+ssn = "123-45-6789"  # Noncompliant {{Likely identified as sensitive SSN exposure. Please cross-verify. Found: '123-45-6789'}}

@@ -1,0 +1,34 @@
+<h1>Avoid Hardcoding JWTs (JSON Web Tokens)</h1>
+<p>This rule checks for hardcoded JWTs (JSON Web Tokens) in Python code.</p>
+<h2>Non-Compliant Example</h2>
+<pre class="noncompliant">
+        <code>
+# Non-compliant code example
+jwt_token_user1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+jwt_token_user2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.YnJhbmNoQkRBUzEyMw=="
+def example_function():
+# Using the JWT inside a function
+jwt_in_function = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.YnJhbmNoQkRBUzEyMw=="
+return jwt_in_function
+</code>
+</pre>
+
+<h2>Compliant Example</h2>
+<pre class="compliant">
+        <code>
+# Compliant code example
+import os
+jwt_token_user1 = os.getenv('JWT_TOKEN_USER1')
+jwt_token_user2 = os.getenv('JWT_TOKEN_USER2')
+
+def example_function():
+# Using the JWT inside a function
+jwt_in_function = os.getenv('JWT_IN_FUNCTION')
+return jwt_in_function
+</code>
+</pre>
+
+<h2>Rationale</h2>
+<p>Hardcoding JWTs in the source code is a security risk. If the source code is exposed, these tokens can be used for unauthorized access or to impersonate users. By storing JWTs in environment variables, you prevent sensitive data from being exposed in the codebase.</p>
+<h2>How to Fix Violations</h2>
+<p>To fix the violation, move the JWTs to environment variables and access them using <code>os.getenv</code> or a similar method appropriate for your programming environment. This approach helps ensure that sensitive tokens are not hardcoded in the source code.</p>
